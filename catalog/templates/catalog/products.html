@@ -1,0 +1,203 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}
+Каталог
+{% endblock %}
+
+
+{% block content %}
+<style>
+    @font-family:'Ubuntu Condensed', sans-serif;
+
+    .h4 {
+      padding: inherit;
+      margin: inherit;
+    }
+
+    .col-sm-3 {
+        width: 25%;
+    }
+
+    .col-sm-9 {
+        width: 75%;
+    }
+
+    .vertical-menu {
+    width: 200 px;
+    font-family: 'Ubuntu Condensed', sans-serif;
+    }
+
+    @media only screen
+    and (min-device-width : 320px)
+    and (max-device-width : 480px){ .vertical-menu { display: none; }}
+
+    .vertical-menu a {
+        background-color:  #ffffff;
+        color: black;
+        display: block;
+        padding: 14px;
+        text-decoration: none;
+    }
+
+    .vertical-menu a:hover {
+        background-color:  #fd7e14;
+        background-color:  #fd7e14;
+    }
+
+    .vertical-menu a.active {
+        background-color:  #fd7e14;
+        color: white;
+    }
+
+
+    .card {
+      width: 225px;
+      min-height: 350px;
+      box-shadow: 1px 2px 4px rgba(0, 0, 0, 0.1);
+      display: flex;
+      flex-direction: column; /* Размещаем элементы в колонку */
+      border-radius: 4px;
+      transition: 0.2s;
+      position: relative;
+    }
+
+    /* При наведении на карточку - меняем цвет тени */
+    .card:hover {
+      box-shadow: 4px 8px 16px rgba(255, 102, 51, 0.2);
+    }
+
+    .card__top {
+      flex: 0 0 220px; /* Задаем высоту 220px, запрещаем расширение и сужение по высоте */
+      position: relative;
+      overflow: hidden; /* Скрываем, что выходит за пределы */
+    }
+
+    /* Контейнер для картинки */
+    .card__image {
+      display: block;
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+    }
+
+    .card__image > img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain; /* Встраиваем картинку в контейнер card__image */
+      transition: 0.2s;
+    }
+
+    /* При наведении - увеличиваем картинку */
+    .card__image:hover > img {
+      transform: scale(1.1);
+    }
+
+
+    .card__bottom {
+      display: flex;
+      flex-direction: column;
+      flex: 1 0 auto; /* Занимаем всю оставшуюся высоту карточки */
+      padding: 50px;
+      margin-bottom: 10px;
+    }
+
+    .card__title {
+      display: block;
+      margin-bottom: 10px;
+      font-weight: 400;
+      font-size: 17px;
+      line-height: 150%;
+      color: #414141;
+    }
+
+    .card__title:hover {
+      color: #ff6633;
+    }
+
+    .card__add {
+      display: block;
+      width: 100%;
+      font-weight: 400;
+      font-size: 17px;
+      color: #70c05b;
+      padding: 10px;
+      text-align: center;
+      border: 1px solid #70c05b;
+      border-radius: 4px;
+      cursor: pointer; /* Меняем курсор при наведении */
+      transition: 0.2s;
+      margin-top: auto; /* Прижимаем кнопку к низу карточки */
+    }
+
+    .card__add:hover {
+      border: 1px solid #ff6633;
+      background-color: #ff6633;
+      color: #fff;
+    }
+
+    .cards {
+      display: grid;
+      /* Автоматически заполняем на всю ширину grid-контейнера */
+      grid-template-columns: repeat(auto-fill, 225px);
+      width: 100%;
+      justify-content: center;
+      justify-items: center; /* Размещаем карточку по центру */
+      column-gap: 20px; /* Отступ между колонками */
+      row-gap: 20px; /* Отступ между рядами */
+      margin: 0 auto;
+
+      .catalog{
+      margin: auto;
+      width:100%;
+      text-aling: center;
+    }
+
+      .product_name {
+      margin-left: 14 px;
+      padding-left: 14 px;
+    }
+
+    .product_price {
+     margin-left: auto;
+     margin-right: auto;
+     padding-left: 14 px;
+    }
+</style>
+<section>
+    <div class="container">
+        <div class="col-sm-3">
+            <div class="vertical-menu">
+<!--                <h3>Категории</h3>-->
+                {% for category in categories %}
+                    <a href="{% url 'cat_slug_products' category_slug=category.id %}"> {{category.name_cat}}</a>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-sm-9 padding-right">
+            <div class="cards">
+                    {% for product in products %}
+                    <div class="card">
+                        <div class="card__top">
+                            <a href="#" class="card__image">
+                            <img   src="{{product.image.url}}" alt="{{image.name}}" tabindex="0">
+                            </a>
+                        </div>
+                        <div class="cart__bootom">
+                            <h5 class="product_name">{{product.title}}</h5>
+                            <p class="product_price">{{product.price}} руб. </p>
+<!--                            <button class="cart__add">В корзину</button>-->
+                            <button type="button" style="border-radius: 3px;
+                            background-color: #fff; margin: 0 auto;
+                            display: block; margin-top: auto;" >
+                                В корзину</button>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

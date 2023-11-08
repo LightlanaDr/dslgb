@@ -1,0 +1,111 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}
+    DSL Wood
+{% endblock %}
+
+
+{% block content %}
+
+<style>
+    .text_h{
+    text-align: left;
+    font-size: 22px;
+    color:#fa8e47;
+    margin-right: 20px;
+
+}
+    .glow-on-hover {
+    width: 220px;
+    height: 50px;
+    border: none;
+    outline: none;
+    color: #fff;
+    background: #111;
+    cursor: pointer;
+    position: relative;
+    z-index: 0;
+    border-radius: 10px;
+}
+
+.glow-on-hover:before {
+    content: '';
+    background: linear-gradient(45deg, #ff0000, #ff7300, #fffb00, #48ff00, #00ffd5, #002bff, #7a00ff, #ff00c8, #ff0000);
+    position: absolute;
+    top: -2px;
+    left:-2px;
+    background-size: 400%;
+    z-index: -1;
+    filter: blur(5px);
+    width: calc(100% + 4px);
+    height: calc(100% + 4px);
+    animation: glowing 20s linear infinite;
+    opacity: 0;
+    transition: opacity .3s ease-in-out;
+    border-radius: 10px;
+}
+
+.glow-on-hover:active {
+    color: #000
+}
+
+.glow-on-hover:active:after {
+    background: transparent;
+}
+
+.glow-on-hover:hover:before {
+    opacity: 1;
+}
+
+.glow-on-hover:after {
+    z-index: -1;
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background: #111;
+    left: 0;
+    top: 0;
+    border-radius: 10px;
+}
+
+@keyframes glowing {
+    0% { background-position: 0 0; }
+    50% { background-position: 400% 0; }
+    100% { background-position: 0 0; }
+}
+    A {
+    color: white; /* Цвет ссылок */
+   }
+       A:visited {
+    color:#fa8e47; /* Цвет посещенных ссылок */
+   }
+   A:active {
+    color: #ffff00; /* Цвет активных ссылок */
+   }
+
+</style>
+    <div class="container">
+        <div class="col-1-2">
+            <h2> DSL Wood </h2>
+            <h4> Сувенирная продукция с лазерной гравировкой. Принимаем к изготовлению заказы от 1 шт, так и серийно.
+            </h4>
+            <p class="text_h"> Разработаем и согласуем дизайн проект за 3 рабочих дня</p>
+            <p class="text_h"> Срок изгтовления продукции на заказ - 3-7 рабочих дней</p>
+            <p class="text_h"> При заказе продукции из наличия - отправка в день заказа </p>
+            <p class="text_h">По всем вопросам обращайтесь по телефонам:</p>
+            <p class="text_h">+7 (904) 022-5х-91, +7 (904) 022-3х-80</p>
+            <button class="glow-on-hover" type="button">
+             <a href="https://www.ozon.ru/seller/dsl-wood-929451/products/?miniapp=seller_929451">
+                 ОТЗЫВЫ О НАС</a></button>
+            <button class="glow-on-hover" type="button">
+             <a href="{% url 'category_products' %}">
+                 КАТАЛОГ</a></button>
+
+        </div>
+        <div class="col-1-2">
+            <img src="/media/images/IMG_3547_06PmRaG.jpg" alt="акция"
+                 width="660">
+        </div>
+    </div>
+{% endblock %}

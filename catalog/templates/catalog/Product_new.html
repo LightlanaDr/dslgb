@@ -1,0 +1,160 @@
+{% extends 'main/layout.html' %}
+
+{% block title %}
+Каталог
+{% endblock %}
+
+
+{% block content %}
+<style>
+    @font-family:'Ubuntu Condensed', sans-serif;
+
+    .h4 {
+      padding: inherit;
+      margin: inherit;
+    }
+
+    .col-sm-3 {
+        width: 25%;
+    }
+
+    .col-sm-9 {
+        width: 75%;
+    }
+
+    .vertical-menu {
+    width: 200 px;
+    font-family: 'Ubuntu Condensed', sans-serif;
+    }
+
+    @media only screen
+    and (min-device-width : 320px)
+    and (max-device-width : 480px){ .vertical-menu { display: none; }}
+
+    .vertical-menu a {
+        background-color:  #ffffff;
+        color: black;
+        display: block;
+        padding: 14px;
+        text-decoration: none;
+    }
+
+    .vertical-menu a:hover {
+        background-color:  #fd7e14;
+        background-color:  #fd7e14;
+    }
+
+    .vertical-menu a.active {
+        background-color:  #fd7e14;
+        color: white;
+    }
+
+    img {
+      display: block;
+      max-width: 100%;
+      height: auto;
+    }
+
+    /* section component */
+    .section {
+      padding-top: 32px;
+      padding-bottom: 32px;
+      background-color: #3f51b5;
+    }
+
+    .section__heading {
+      margin-top: 0;
+      margin-bottom: 16px;
+      color: #fff;
+    }
+
+    /* container component */
+    .container {
+      max-width: 1140px;
+      padding-left: 15px;
+      padding-right: 15px;
+      margin-right: auto;
+      margin-left: auto;
+    }
+
+    /* grid component */
+    .grid {
+      list-style: none;
+      padding: 0;
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: center;
+      margin-left: -8px;
+      margin-right: -8px;
+      margin-bottom: -16px;
+      margin-top: 0;
+    }
+
+    .grid__item {
+      width: 25%;
+      min-width: 240px;
+      margin-right: 8px;
+      margin-left: 8px;
+      margin-bottom: 16px;
+    }
+
+    /* product component */
+    .product {
+
+      position: relative;
+      padding: 16px;
+      border-radius: 4px;
+      background-color: #fff;
+      box-shadow: 0px 2px 1px -1px rgba(0, 0, 0, 0.2),
+        0px 1px 1px 0px rgba(0, 0, 0, 0.14), 0px 1px 3px 0px rgba(0, 0, 0, 0.12);
+    }
+
+    .product__name {
+      margin-top: 0;
+      margin-bottom: 8px;
+    }
+
+    .product__price {
+      margin: 0;
+    }
+
+</style>
+<section>
+    <div class="container">
+        <div class="col-sm-3">
+            <div class="vertical-menu">
+<!--                <h3>Категории</h3>-->
+                {% for category in categories %}
+                    <a href="{% url 'cat_slug_products' category_slug=category.id %}"> {{category.name_cat}}</a>
+                {% endfor %}
+            </div>
+        </div>
+        <div class="col-sm-9 padding-right">
+            <section class="section">
+                <div class="container_new">
+                    <h2 class="section_heading"></h2>
+<!--                    Блок грид-->
+                    <ul class="grid">
+                            {% for product in products %}
+
+                        <li class="grid_item">
+                                <article class="product">
+                                    <a href="#" >
+                                        <img   class="product_image"
+                                                src="{{product.image.url}}" alt="{{image.name}}" tabindex="0">
+                                    </a>
+                                    <h5 class="product_name">{{product.title}}</h5>
+                                    <p class="product_price">{{product.price}} руб</p>
+                                    <p style="text-aling: center"><button>В корзину</button></p>
+                                </article>
+                                                        </li>
+
+                            {% endfor %}
+                        </ul>
+                    </div>
+            </section>
+        </div>
+    </div>
+</section>
+
+{% endblock %}

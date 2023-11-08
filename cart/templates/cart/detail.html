@@ -1,0 +1,201 @@
+{% extends 'main/layout.html' %}
+{% load static %}
+
+{% block title %}
+Корзина
+{% endblock %}
+{% block content %}
+<style>
+.tableMobileAdaptiv{
+	width: 100%;
+}
+
+.tableMobileAdaptiv{
+	font-family: Arial;
+}
+
+.tableMobileAdaptiv  tr td{
+	text-align: center;
+	font-size: 16px;
+	line-height: 1.3em;
+	vertical-align: middle;
+	background-color: #fff;
+}
+
+.tableMobileAdaptiv  tr td:nth-child(4){
+	min-width: 150px;
+}
+
+.tableMobileAdaptiv thead tr td{
+	background-color: #4d4d4d;
+	color: #fff;
+	padding: 15px;
+	border: 1px solid #4d4d4d;
+}
+
+.tableMobileAdaptiv tbody tr td{
+	padding: 10px;
+	border: 1px solid #cacaca;
+}
+
+.tableMobileAdaptiv tbody tr td img{
+	max-width: 150px;
+	height: auto;
+}
+
+.tableMobileAdaptiv tbody tr td .btnOrder{
+	display: inline-block;
+	margin: 0px;
+	min-width: 80px;
+	padding: 10px;
+	cursor: pointer;
+	border: none;
+	outline: none;
+	background-color: #cb442e;
+	color: #fff;
+	font-size: 14px;
+	text-align: center;
+	text-decoration: none;
+}
+/**************************** Адаптивная таблица мобильная версия ***************************/
+@media only screen and (max-width: 1200px){
+	.wrap{
+		box-sizing: border-box;
+		padding: 0px 10px;
+	}
+}
+
+@media only screen and (max-width: 979px){
+	.tableMobileAdaptiv thead{
+		display: none;
+	}
+
+	.tableMobileAdaptiv tr{
+		display: flex;
+		flex-wrap: wrap
+	}
+
+	.tableMobileAdaptiv tbody tr td{
+		display: flex;
+		width: 100%;
+		align-items: center;
+		border-top: none;
+	}
+
+	.tableMobileAdaptiv tbody tr td::before{
+		content: attr(data-label);
+		width: 30%;
+		text-align: left;
+		padding-right: 20px;
+		box-sizing: border-box;
+	}
+
+	.tableMobileAdaptiv tbody tr td .contentTableTd{
+		width: 70%;
+		text-align: left;
+	}
+
+	.tableMobileAdaptiv tbody tr td:first-child{
+		border-top: 1px solid #cacaca;
+	}
+
+	.tableMobileAdaptiv tbody tr td:last-child{
+		border-bottom: 1px solid #cacaca;
+		margin-bottom: 40px;
+	}
+}
+
+@media only screen and (max-width: 479px){
+	.tableMobileAdaptiv tbody tr td{
+		flex-wrap: wrap;
+		padding: 0px;
+		border-bottom: none;
+	}
+
+	.tableMobileAdaptiv tbody tr td img{
+		max-width: 90%;
+	}
+
+	.tableMobileAdaptiv tbody tr td::before{
+		width: 100%;
+		text-align: center;
+		background-color: rgba(0,0,0,0.1);
+		padding: 10px;
+	}
+
+	.tableMobileAdaptiv tbody tr td .contentTableTd{
+		width: 100%;
+		text-align: center;
+		padding: 10px;
+	}
+
+	.tableMobileAdaptiv tbody tr td:nth-child(3) .contentTableTd{
+		text-align: left;
+	}
+}
+
+</style>
+
+{% if not cart %}
+<div class="container">
+<h3>Корзина пуста</h3>
+</div>
+{% else %}
+<section>
+<div class="container">
+<h3>Корзина покупок</h3>
+
+  <table class="tableMobileAdaptiv" >
+    <thead>
+      <tr>
+        <th>Картинка</th>
+        <th>Товар</th>
+        <th>Обновить кол-во</th>
+        <th>Кол-во</th>
+        <th>Цена за шт</th>
+        <th>Общая стоимость</th>
+        <th>Удалить</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for item in cart %}
+        {% with product=item.product %}
+          <tr>
+            <td>
+                <div class="contentTableTd"><img src="{% if product.image %}{{ product.image.url }}
+                {% else %}{% static 'img/no_image.png' %}{% endif %}"  ></div>
+            </td>
+            <td>{{ product.title }}</td>
+            <td>
+              <form action="{% url 'cart_add' product.id %}" method="post">
+                {{ item.update_quantity_form.quantity }}
+                {{ item.update_quantity_form.update }}
+                <input type="submit" value="Обновить">
+                {% csrf_token %}
+              </form>
+            </td>
+
+            <td>
+              {{ item.quantity }}
+            </td>
+            <td class="num">{{ item.price }}₽</td>
+            <td class="num">{{ item.total_price }}₽</td>
+            <td><a href="{% url 'cart_remove' product.id %}">Удалить</a></td>
+          </tr>
+        {% endwith %}
+      {% endfor %}
+      <tr class="total">
+        <td>Всего</td>
+        <td colspan="4"></td>
+        <td class="num">{{ cart.get_total_price }}₽</td>
+      </tr>
+    </tbody>
+  </table>
+  <p class="text-right">
+    <a href="{% url 'category_products' %}" class="button light">В каталог</a>
+    <a href="{% url 'order_create' %}" class="button">Оформить заказ</a>
+  </p>
+</div>
+  </section>
+{%endif%}
+{% endblock %}

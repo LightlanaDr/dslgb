@@ -1,0 +1,64 @@
+{% load static %}
+<!doctype html>
+<html lang="ru">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <title>
+        {% block title %}
+        DSL Wood
+        {% endblock %}
+    </title>
+    <link rel="stylesheet" href="{% static '/main/css/index.css' %}">
+    <link rel="stylesheet" href="{% static '/main/css/gallery3.css' %}">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.3/dist/css/bootstrap.min.css">
+
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.11.8/dist/umd/popper.min.js"
+            integrity="sha384-I7E8VVD/ismYTF4hNIPjVp/Zjvgyol6VFvRkX/vR+Vc4jQkC+hVqc2pM8ODewa9r"
+            crossorigin="anonymous"></script>
+    <style>
+        .footer {
+           position: fixed;
+           right: 0;
+           bottom: 0;
+           text-align: center;
+           width: 99%;
+           font-size: 19px;
+        font-weight: bold;
+          color: #fafaff;
+         }
+    </style>
+
+
+</head>
+
+<header>
+    <div>
+        <nav>
+            <ul class="menu-main">
+                <li><a href="/">Главная</a></li>
+                <li><a href="/catalog/">Каталог</a></li>
+                <li><a href="/delivery/">Доставка</a></li>
+                <li><a href="/gallery/">Наши работы</a></li>
+                <li><a href="/cart/">Корзина</a></li>
+            </ul>
+        </nav>
+    </div>
+</header>
+
+<body>
+<div>
+    <hr class="hr-line">
+    {% block content %}
+    {% endblock %}
+
+</div>
+
+
+<div class="footer">
+
+    <p class="text_f"> Светлана Дружкова * 2023 год </p>
+
+</div>
+</body>
+</html>
